@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* Dark mode is driven by <html data-theme="dark"> (set before first paint by an inline script). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-secondary);
+  --color-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+}
+
+/* ───────── Design tokens ───────── */
+:root {
+  --background: #f5f5f7;
+  --foreground: #1d1d1f;
+  --surface: #ffffff;
+  --surface-secondary: #f2f2f7;
+  --surface-hover: rgba(0, 0, 0, 0.055);
+  --border: rgba(0, 0, 0, 0.1);
+  --muted: #6e6e73;
+  --accent: #0a84ff;
+  --accent-foreground: #ffffff;
+  --danger: #ff3b30;
+  --success: #28c840;
+  --warning: #ff9f0a;
+
+  /* glass surfaces */
+  --glass-menu: rgba(255, 255, 255, 0.5);
+  --glass-window: rgba(247, 247, 250, 0.8);
+  --glass-window-inactive: rgba(247, 247, 250, 0.92);
+  --glass-sidebar: rgba(236, 236, 241, 0.7);
+  --glass-dock: rgba(255, 255, 255, 0.34);
+  --glass-panel: rgba(250, 250, 252, 0.72);
+  --glass-widget: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --glass-highlight: rgba(255, 255, 255, 0.7);
+
+  --shadow-window: 0 0 0 0.5px rgba(0, 0, 0, 0.18), 0 22px 60px -12px rgba(15, 23, 42, 0.38), 0 8px 20px -8px rgba(15, 23, 42, 0.22);
+  --shadow-window-inactive: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 10px 30px -10px rgba(15, 23, 42, 0.26);
+  --shadow-panel: 0 0 0 0.5px rgba(0, 0, 0, 0.14), 0 18px 50px -10px rgba(15, 23, 42, 0.35);
+  --shadow-dock: 0 0 0 0.5px rgba(0, 0, 0, 0.12), 0 18px 40px -12px rgba(15, 23, 42, 0.4);
+  --social-glyph-bg: #fff;
+}
+
+[data-theme="dark"] {
+  --background: #111113;
+  --foreground: #f5f5f7;
+  --surface: #1c1c1e;
+  --surface-secondary: #2c2c2e;
+  --surface-hover: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --muted: #98989f;
+  --accent: #0a84ff;
+  --danger: #ff453a;
+  --success: #30d158;
+
+  --glass-menu: rgba(30, 30, 34, 0.5);
+  --glass-window: rgba(36, 36, 40, 0.8);
+  --glass-window-inactive: rgba(34, 34, 38, 0.92);
+  --glass-sidebar: rgba(46, 46, 52, 0.62);
+  --glass-dock: rgba(40, 40, 46, 0.4);
+  --glass-panel: rgba(36, 36, 40, 0.72);
+  --glass-widget: rgba(38, 38, 44, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+
+  --shadow-window: 0 0 0 0.5px rgba(255, 255, 255, 0.16), 0 24px 64px -12px rgba(0, 0, 0, 0.7), 0 8px 22px -8px rgba(0, 0, 0, 0.5);
+  --shadow-window-inactive: 0 0 0 0.5px rgba(255, 255, 255, 0.1), 0 10px 30px -10px rgba(0, 0, 0, 0.55);
+  --shadow-panel: 0 0 0 0.5px rgba(255, 255, 255, 0.14), 0 18px 50px -10px rgba(0, 0, 0, 0.65);
+  --shadow-dock: 0 0 0 0.5px rgba(255, 255, 255, 0.14), 0 18px 40px -12px rgba(0, 0, 0, 0.6);
+  --social-glyph-bg: #1c1c1e;
+}
+
+[data-accent="purple"] { --accent: #bf5af2; }
+[data-accent="pink"] { --accent: #ff375f; }
+[data-accent="red"] { --accent: #ff453a; }
+[data-accent="orange"] { --accent: #ff9f0a; --accent-foreground: #1d1d1f; }
+[data-accent="green"] { --accent: #28a745; }
+[data-accent="graphite"] { --accent: #8e8e93; }
+[data-theme="dark"][data-accent="green"] { --accent: #30d158; --accent-foreground: #08210f; }
+
+/* ───────── Base ───────── */
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  overscroll-behavior: none;
+  text-rendering: optimizeLegibility;
+}
+::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+input, textarea, select { font: inherit; color: inherit; }
+
+/* Keep the wallpaper shorthand and its longhand sizing declarations together in CSS. */
+.wallpaper-layer {
+  background: var(--wallpaper-background);
+  background-position: center bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.wallpaper-layer-center { background-position: center; }
+
+/* Interactive chrome (menus, dock, titlebars) shouldn't select text on drag */
+.os-chrome { user-select: none; -webkit-user-select: none; }
+
+/* ───────── Glass ───────── */
+.glass { -webkit-backdrop-filter: blur(var(--glass-blur, 24px)) saturate(1.8); backdrop-filter: blur(var(--glass-blur, 24px)) saturate(1.8); }
+.glass-menu   { --glass-blur: 28px; background: var(--glass-menu);   border-bottom: 0.5px solid var(--glass-border); box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08); }
+.glass-window { --glass-blur: 40px; background: var(--glass-window); box-shadow: var(--shadow-window); }
+.glass-window[data-inactive="true"] { background: var(--glass-window-inactive); box-shadow: var(--shadow-window-inactive); }
+.glass-sidebar { --glass-blur: 30px; background: var(--glass-sidebar); }
+.glass-dock   { --glass-blur: 36px; background: var(--glass-dock); border: 0.5px solid var(--glass-border); box-shadow: var(--shadow-dock), inset 0 0.5px 0 var(--glass-highlight), inset 0 0 22px rgba(255,255,255, calc(var(--kbd-glow, 0.45) * 0.14)); }
+.glass-panel  { --glass-blur: 44px; background: var(--glass-panel);  border: 0.5px solid var(--glass-border); box-shadow: var(--shadow-panel), inset 0 0.5px 0 var(--glass-highlight); }
+.glass-widget { --glass-blur: 26px; background: var(--glass-widget); border: 0.5px solid var(--glass-border); box-shadow: 0 8px 28px -10px rgba(15, 23, 42, 0.28), inset 0 0.5px 0 var(--glass-highlight); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-window { background: var(--surface); }
+  .glass-panel, .glass-dock, .glass-widget, .glass-menu { background: color-mix(in srgb, var(--surface) 92%, transparent); }
+}
+
+/* ───────── Scrollbars (subtle, overlay-style) ───────── */
+.mac-scroll { overflow: auto; scrollbar-width: thin; scrollbar-color: transparent transparent; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+.mac-scroll:hover, .mac-scroll:focus-within { scrollbar-color: color-mix(in srgb, var(--foreground) 28%, transparent) transparent; }
+.mac-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+.mac-scroll::-webkit-scrollbar-track { background: transparent; }
+.mac-scroll::-webkit-scrollbar-thumb { background: transparent; border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+.mac-scroll:hover::-webkit-scrollbar-thumb { background-color: color-mix(in srgb, var(--foreground) 28%, transparent); }
+.mac-scroll::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--foreground) 45%, transparent); }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ───────── Range slider (native input, styled) ───────── */
+.mac-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; --fill: 50%; }
+.mac-slider::-webkit-slider-runnable-track { height: 22px; border-radius: 11px; background: linear-gradient(to right, #fff var(--fill), color-mix(in srgb, var(--foreground) 16%, transparent) var(--fill)); box-shadow: inset 0 0 0 0.5px var(--border); }
+.mac-slider::-moz-range-track { height: 22px; border-radius: 11px; background: linear-gradient(to right, #fff var(--fill), color-mix(in srgb, var(--foreground) 16%, transparent) var(--fill)); box-shadow: inset 0 0 0 0.5px var(--border); }
+.mac-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); border: 0; }
+.mac-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35); border: 0; }
+.mac-slider-plain::-webkit-slider-runnable-track { height: 6px; background: linear-gradient(to right, var(--accent) var(--fill), color-mix(in srgb, var(--foreground) 18%, transparent) var(--fill)); box-shadow: none; }
+.mac-slider-plain::-moz-range-track { height: 6px; background: linear-gradient(to right, var(--accent) var(--fill), color-mix(in srgb, var(--foreground) 18%, transparent) var(--fill)); box-shadow: none; }
+.mac-slider-plain::-webkit-slider-thumb { margin-top: -8px; width: 22px; height: 22px; }
+.mac-slider-plain { height: 22px; }
+
+/* ───────── Motion helpers ───────── */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+.skeleton { position: relative; overflow: hidden; background: color-mix(in srgb, var(--foreground) 8%, transparent); border-radius: 8px; }
+.skeleton::after { content: ""; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--foreground) 10%, transparent), transparent); animation: shimmer 1.4s infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.9s linear infinite; }
+@keyframes boot-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.app-icon { box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.45), inset 0 -0.5px 0 rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.25); }
+
+/* Prose helpers used inside apps */
+.app-prose p { margin: 0 0 0.75em; }
+.app-prose a { color: var(--accent); text-underline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .skeleton::after { display: none; }
+}
+
+/* Windows animate bounds only for maximize/restore, never while dragging */
+.win-animating { transition: left 0.28s cubic-bezier(0.32, 0.72, 0, 1), top 0.28s cubic-bezier(0.32, 0.72, 0, 1), width 0.28s cubic-bezier(0.32, 0.72, 0, 1), height 0.28s cubic-bezier(0.32, 0.72, 0, 1); }
+
+/* Menu bar adapts to wallpaper brightness */
+.glass-menu[data-tone="dark"] { background: rgba(18, 18, 22, 0.38); color: #fff; }
+.glass-menu[data-tone="light"] { background: rgba(255, 255, 255, 0.48); color: #111114; }

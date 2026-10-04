@@ -1,0 +1,8 @@
+# Never upload local secrets or development-only state to Vercel.
+.env
+.env.*
+!.env.example
+.DS_Store
+node_modules
+.next
+coverage
