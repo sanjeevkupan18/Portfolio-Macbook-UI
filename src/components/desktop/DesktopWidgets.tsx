@@ -69,7 +69,7 @@ function BatteryWidget() {
       <p className="text-[34px] leading-none font-light tabular-nums">{battery.level}%</p>
       <div>
         <div className="h-1.5 overflow-hidden rounded-full bg-[color-mix(in_srgb,var(--foreground)_14%,transparent)]"><div className={cn("h-full rounded-full transition-[width] duration-700", low ? "bg-danger" : "bg-success")} style={{ width: `${battery.level}%` }} /></div>
-        <p className="mt-1 text-[11px] text-muted">{batteryStatusLabel(battery)} · simulated</p>
+        <p className="mt-1 text-[11px] text-muted">{batteryStatusLabel(battery)} · {battery.isReal ? "device battery" : "simulated"}</p>
       </div>
     </div>
   );
@@ -79,10 +79,20 @@ function ProfileWidget() {
   const { openApp } = useLauncher();
   const p = portfolio.profile;
   return (
-    <button type="button" onClick={() => openApp("about")} aria-label={`${p.name}, ${p.role}. Open About`} className={cn(shell, "flex h-full w-full items-center gap-3 hover:brightness-105")}>
-      <Avatar size={52} />
-      <span className="min-w-0">
-        <span className="block truncate text-[14px] font-semibold">{p.name}</span>
+    <button
+      type="button"
+      onClick={() => openApp("about")}
+      aria-label={`${p.name}, ${p.role}. Open About`}
+      className={cn(
+        shell,
+        "flex h-full w-full items-center gap-3.5 !p-4 hover:brightness-105 active:scale-[0.99] transition-all"
+      )}
+    >
+      <div className="shrink-0">
+        <Avatar size={52} />
+      </div>
+      <span className="min-w-0 flex-1">
+        <span className="block truncate text-[14px] font-semibold text-foreground">{p.name}</span>
         <span className="block truncate text-[12px] font-medium text-accent">{p.role}</span>
         <span className="mt-0.5 line-clamp-2 block text-[11px] leading-snug text-muted">{p.shortBio}</span>
       </span>
@@ -113,7 +123,7 @@ export function DesktopWidgets() {
       {w.clock && <Enter i={1}><ClockWidget /></Enter>}
       {w.battery && <Enter i={2}><BatteryWidget /></Enter>}
       {w.projects && <Enter i={3}><ProjectsWidget /></Enter>}
-      {w.profile && <Enter i={4} className="col-span-2 !h-[100px]"><ProfileWidget /></Enter>}
+      {w.profile && <Enter i={4} className="col-span-2 !h-[110px]"><ProfileWidget /></Enter>}
     </section>
   );
 }

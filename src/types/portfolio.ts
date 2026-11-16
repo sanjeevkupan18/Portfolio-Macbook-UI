@@ -49,6 +49,8 @@ export interface TimelineEntry {
   title: string;
   subtitle?: string;
   kind: "education" | "experience" | "achievement" | "certification";
+  badge?: string;
+  active?: boolean;
 }
 
 export interface SkillCategory {
@@ -68,6 +70,10 @@ export interface Skill {
   /** Alternative names used by projects / search. */
   aliases?: string[];
   description: string;
+  /** Real-world practical exposure and context snippet for recruiters */
+  practicalExposure?: string;
+  /** Whether this skill was used in production during internship (e.g. Tapvera) */
+  production?: boolean;
 }
 
 export type ProjectStatus = "Completed" | "In Progress" | "Prototype";
@@ -92,6 +98,10 @@ export interface Project {
   /** Path under /public. When omitted a generated cover is used. */
   image?: string;
   cover: { from: string; to: string; icon: string };
+  /** High-impact quantitative metrics & technical signals for recruiters */
+  metrics?: string[];
+  /** Deep dive on architecture & trade-off decisions */
+  engineeringDecisions?: string;
 }
 
 export interface Achievement {
@@ -111,6 +121,18 @@ export interface Certification {
 export interface ResumeConfig {
   file: string;
   downloadName: string;
+}
+
+export interface AvailabilityConfig {
+  status: string;
+  roles: string[];
+  period?: string;
+}
+
+export interface LearningItem {
+  label: string;
+  icon: string;
+  note?: string;
 }
 
 export interface ContactConfig {
@@ -141,6 +163,8 @@ export interface Portfolio {
   extraCurricular: string[];
   certifications: Certification[];
   resume: ResumeConfig;
+  availability?: AvailabilityConfig;
+  learningNow?: LearningItem[];
   contact: ContactConfig;
   desktopIcons: DesktopFolderIcon[];
 }

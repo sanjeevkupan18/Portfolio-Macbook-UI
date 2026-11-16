@@ -10,8 +10,6 @@ import { useNow } from "@/hooks/useNow";
 import { useWallpaper } from "@/hooks/useWallpaper";
 import { cn, greetingFor } from "@/lib/utils";
 
-const HINT = process.env.NEXT_PUBLIC_PASSWORD_HINT || "Hint: a friendly greeting";
-
 /** macOS-style login window. The demo password is validated server-side by /api/unlock. */
 export function LockScreen() {
   const { unlock, sleep, restart, shutdown } = useSession();
@@ -83,7 +81,14 @@ export function LockScreen() {
           <Avatar size={96} />
           <h1 className="text-[20px] font-semibold drop-shadow-sm">{portfolio.profile.name}</h1>
           <p className="-mt-2 text-[13px] opacity-80">{greetingFor(date)}</p>
-          <div className={cn("flex w-full items-center rounded-full border px-4 backdrop-blur-xl", error ? "border-red-400/80" : light ? "border-black/10" : "border-white/25", light ? "bg-white/50" : "bg-white/15")}>
+          <div
+            style={{ outline: "none", boxShadow: "none" }}
+            className={cn(
+              "flex w-full items-center rounded-full px-4 backdrop-blur-xl border-0 shadow-none outline-none focus:outline-none focus-within:outline-none focus-within:ring-0",
+              error && "ring-1 ring-red-400/80",
+              light ? "bg-white/50" : "bg-white/15"
+            )}
+          >
             <label htmlFor="lock-password" className="sr-only">Password</label>
             <input
               id="lock-password"
@@ -91,19 +96,33 @@ export function LockScreen() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter Password"
+              placeholder="Type Open"
               autoComplete="off"
               aria-invalid={error ? true : undefined}
               aria-describedby="lock-help"
               disabled={busy}
-              className={cn("h-9 min-w-0 flex-1 bg-transparent text-[14px] outline-none", light ? "placeholder:text-neutral-700/60" : "placeholder:text-white/60")}
+              style={{ outline: "none", boxShadow: "none" }}
+              className={cn(
+                "h-9 min-w-0 flex-1 bg-transparent text-[14px] border-none outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 shadow-none",
+                light ? "placeholder:text-neutral-700/60" : "placeholder:text-white/60"
+              )}
             />
-            <button type="submit" disabled={busy || password.length === 0} aria-label="Unlock" className={cn("grid size-6 place-items-center rounded-full transition-opacity", light ? "bg-black/60 text-white" : "bg-white/70 text-black", (busy || password.length === 0) && "opacity-40")}>
+            <button
+              type="submit"
+              disabled={busy || password.length === 0}
+              aria-label="Unlock"
+              style={{ outline: "none" }}
+              className={cn(
+                "grid size-6 place-items-center rounded-full transition-opacity outline-none focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0",
+                light ? "bg-black/60 text-white" : "bg-white/70 text-black",
+                (busy || password.length === 0) && "opacity-40"
+              )}
+            >
               {busy ? <Loader2 className="spin size-3.5" aria-hidden="true" /> : <ArrowRight className="size-3.5" aria-hidden="true" />}
             </button>
           </div>
           <p id="lock-help" role={error ? "alert" : undefined} className={cn("min-h-4 text-center text-[12px]", error ? (light ? "text-red-700" : "text-red-200") : "opacity-75")}>
-            {error ?? `${HINT} · Press Enter to unlock`}
+            {error ?? "Type Open and Press Enter to Unlock"}
           </p>
         </motion.form>
 

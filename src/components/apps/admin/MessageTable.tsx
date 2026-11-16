@@ -157,7 +157,13 @@ export function MessageTable({ messages, ...handlers }: ListProps) {
                   </div>
                 </td>
                 <td className="truncate px-3 py-1.5 text-muted">
-                  <a href={`mailto:${m.email}`} className="hover:underline" title={m.email}>
+                  <a
+                    href={`mailto:${m.email}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                    title={m.email}
+                  >
                     {m.email}
                   </a>
                 </td>
@@ -197,7 +203,12 @@ export function MessageCards({ messages, ...handlers }: ListProps) {
                   <p className={cn("min-w-0 break-words text-[14px]", unread ? "font-semibold" : "font-medium")}>{m.name}</p>
                   <StatusBadge status={m.status} />
                 </div>
-                <a href={`mailto:${m.email}`} className="block break-all text-[12px] text-muted hover:underline">
+                <a
+                  href={`mailto:${m.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block break-all text-[12px] text-muted hover:underline"
+                >
                   {m.email}
                 </a>
                 <p className={cn("mt-1 break-words text-[13px]", unread && "font-semibold")}>

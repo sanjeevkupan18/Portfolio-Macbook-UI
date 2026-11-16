@@ -21,13 +21,69 @@ interface Nav { appId: AppId; launch: AppLaunch }
 export function MobileOS() {
   const { phase, wake, powerOn } = useSession();
   const { prefs } = useDesktop();
-  const { toggle } = useOverlay();
+  const { toggle, overlay, close: closeOverlay } = useOverlay();
   const reduce = useReducedMotion();
   const [nav, setNav] = useState<Nav | null>(null);
 
-  const openApp = useCallback((appId: AppId, params?: AppParams) => {
-    setNav((prev) => ({ appId, launch: { params, nonce: (prev?.appId === appId ? prev.launch.nonce : 0) + 1 } }));
+  // Initialize root history state and handle mobile back button navigation
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.history.state || !window.history.state.type) {
+      window.history.replaceState({ type: "mobile-home" }, "");
+    }
+
+    const onPopState = (e: PopStateEvent) => {
+      const state = e.state as { type?: string; appId?: AppId; params?: AppParams } | null;
+      if (!state || state.type === "mobile-home") {
+        setNav(null);
+      } else if (state.type === "mobile-app" && state.appId) {
+        setNav({ appId: state.appId, launch: { params: state.params, nonce: 1 } });
+      }
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
   }, []);
+
+  const openApp = useCallback((appId: AppId, params?: AppParams) => {
+    setNav((prev) => {
+      const isSameApp = prev?.appId === appId;
+      const nextNonce = (isSameApp ? prev.launch.nonce : 0) + 1;
+      if (!isSameApp && typeof window !== "undefined") {
+        window.history.pushState({ type: "mobile-app", appId, params }, "");
+      }
+      return { appId, launch: { params, nonce: nextNonce } };
+    });
+  }, []);
+
+  const closeApp = useCallback(() => {
+    if (typeof window !== "undefined" && window.history.state?.type === "mobile-app") {
+      window.history.back();
+    } else {
+      setNav(null);
+    }
+  }, []);
+
+  // Track overlays (Spotlight, Control Center, Dialogs) in history so back button dismisses overlay first
+  useEffect(() => {
+    if (!overlay) return;
+    let popped = false;
+    window.history.pushState({ type: "mobile-overlay", overlay: overlay.type }, "");
+
+    const onPopState = () => {
+      popped = true;
+      closeOverlay();
+    };
+
+    window.addEventListener("popstate", onPopState, { once: true });
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+      if (!popped && window.history.state?.type === "mobile-overlay") {
+        window.history.back();
+      }
+    };
+  }, [overlay, closeOverlay]);
+
   const launcher = useMemo<Launcher>(() => ({ openApp }), [openApp]);
 
   useEffect(() => {
@@ -57,7 +113,7 @@ export function MobileOS() {
             >
               <MobileHome />
             </motion.div>
-            <AnimatePresence>{nav && <MobileApp key={nav.appId} appId={nav.appId} launch={nav.launch} onClose={() => setNav(null)} />}</AnimatePresence>
+            <AnimatePresence>{nav && <MobileApp key={nav.appId} appId={nav.appId} launch={nav.launch} onClose={closeApp} />}</AnimatePresence>
           </>
         )}
         {dark && (

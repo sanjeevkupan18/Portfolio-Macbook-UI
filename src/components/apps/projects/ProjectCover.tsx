@@ -30,7 +30,7 @@ export function ProjectCover({ project, className, size = "card" }: ProjectCover
       <div className="absolute -bottom-1/2 -left-1/4 size-3/4 rounded-full bg-black/25 blur-3xl" />
       <div
         className={cn(
-          "relative grid place-items-center rounded-[28%] bg-white/18 text-white shadow-[inset_0_0.5px_0_rgba(255,255,255,0.5),0_10px_30px_-8px_rgba(0,0,0,0.45)] backdrop-blur-sm",
+          "relative grid place-items-center rounded-[28%] bg-white/20 text-white shadow-[inset_0_0.5px_0_rgba(255,255,255,0.6),0_12px_32px_-8px_rgba(0,0,0,0.5)] backdrop-blur-md transition-transform duration-300 group-hover:scale-108",
           size === "hero" ? "size-24 @lg:size-28" : "size-14",
         )}
       >

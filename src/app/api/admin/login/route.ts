@@ -1,5 +1,6 @@
 import { assertSameOrigin, clientKey, fail, handle, ok, readJson } from "@/lib/api";
 import { createSession, verifyCredentials } from "@/lib/auth";
+import { isGateUnlocked } from "@/lib/gate";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { adminLoginSchema } from "@/lib/validation";
 
@@ -9,6 +10,9 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   return handle(async () => {
     assertSameOrigin(request);
+    if (!(await isGateUnlocked())) {
+      return fail(403, "gate_locked", "Administrator gate is locked. Passcode required.");
+    }
     const { email, password } = adminLoginSchema.parse(await readJson(request));
     await enforceRateLimit(clientKey(request, "admin-login"), 8, 15 * 60);
     const admin = await verifyCredentials(email, password);

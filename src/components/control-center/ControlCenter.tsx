@@ -103,7 +103,7 @@ export function ControlCenter() {
               <BatIcon className="size-5 text-muted" aria-hidden="true" />
               <div className="min-w-0 flex-1">
                 <p className="text-[12px] font-semibold">Battery <span className="font-normal text-muted">· {battery.level}%</span></p>
-                <p className="text-[11px] text-muted">{batteryStatusLabel(battery)} <span className="opacity-70">(simulated)</span></p>
+                <p className="text-[11px] text-muted">{batteryStatusLabel(battery)} <span className="opacity-70">({battery.isReal ? "Live device" : "simulated"})</span></p>
               </div>
               <div className="h-1.5 w-20 overflow-hidden rounded-full bg-[color-mix(in_srgb,var(--foreground)_16%,transparent)]" role="img" aria-label={`Battery ${battery.level} percent`}>
                 <div className={cn("h-full rounded-full", battery.level <= 20 && !battery.charging ? "bg-danger" : "bg-success")} style={{ width: `${battery.level}%` }} />

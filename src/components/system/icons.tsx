@@ -1,7 +1,7 @@
 import {
   Home, User, Layers, FolderOpen, Mail, FileText, Settings, ShieldCheck, Database, ChartBar, ChartLine, ChartScatter,
   Network, KeyRound, Code, Boxes, Workflow, Binary, Sparkles, Cpu, MessageSquareText, Mic, Cloud, Brain, ListChecks,
-  Folder, Terminal, GitBranch, Globe, type LucideIcon, type LucideProps,
+  Folder, Terminal, GitBranch, Globe, Bot, type LucideIcon, type LucideProps,
 } from "lucide-react";
 import type { IconName } from "@/types/icons";
 
@@ -9,7 +9,7 @@ import type { IconName } from "@/types/icons";
 export const iconMap: Record<IconName, LucideIcon> = {
   Home, User, Layers, FolderOpen, Mail, FileText, Settings, ShieldCheck, Database, ChartBar, ChartLine, ChartScatter,
   Network, KeyRound, Code, Boxes, Workflow, Binary, Sparkles, Cpu, MessageSquareText, Mic, Cloud, Brain, ListChecks,
-  Folder, Terminal, GitBranch, Globe,
+  Folder, Terminal, GitBranch, Globe, Bot,
 };
 
 export type NamedIconProps = Omit<LucideProps, "ref"> & { name: string | undefined };

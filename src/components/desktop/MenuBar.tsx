@@ -201,7 +201,7 @@ export function MenuBar() {
         <button type="button" data-overlay-trigger aria-label={`Bluetooth ${prefs.bluetooth ? "on" : "off"}`} className={cn(barBtn, "max-sm:hidden")} onClick={() => toggle({ type: "controlCenter" })}>
           {prefs.bluetooth ? <Bluetooth className="size-4" /> : <BluetoothOff className="size-4 opacity-60" />}
         </button>
-        <button type="button" data-overlay-trigger aria-label={`Battery ${battery.level} percent, ${battery.charging ? "charging" : "not charging"} (simulated)`} className={cn(barBtn, "gap-1")} onClick={() => toggle({ type: "controlCenter" })}>
+        <button type="button" data-overlay-trigger aria-label={`Battery ${battery.level} percent, ${battery.charging ? "charging" : "not charging"}${battery.isReal ? " (live device)" : " (simulated)"}`} className={cn(barBtn, "gap-1")} onClick={() => toggle({ type: "controlCenter" })}>
           <span className="text-[12px] tabular-nums">{battery.level}%</span><BatIcon className="size-[18px]" />
         </button>
         <button type="button" data-overlay-trigger aria-label="Search (Spotlight)" className={barBtn} onClick={() => toggle({ type: "spotlight" })}><Search className="size-4" /></button>

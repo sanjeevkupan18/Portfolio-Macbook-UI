@@ -46,6 +46,10 @@ export function isUnauthorized(res: ApiResult<unknown>): boolean {
 }
 
 export const adminApi = {
+  checkGate: () => request<{ unlocked: boolean }>("/api/admin/gate"),
+  unlockGate: (passcode: string) =>
+    request<{ unlocked: boolean }>("/api/admin/gate", { method: "POST", body: { passcode } }),
+  lockGate: () => request<{ locked: boolean }>("/api/admin/gate", { method: "DELETE" }),
   session: () => request<SessionData>("/api/admin/session"),
   login: (email: string, password: string) => request<{ email: string }>("/api/admin/login", { method: "POST", body: { email, password } }),
   logout: () => request<Record<string, never>>("/api/admin/logout", { method: "POST" }),

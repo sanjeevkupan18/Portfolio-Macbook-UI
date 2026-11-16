@@ -12,12 +12,35 @@ export function projectsUsing(skill: Skill, projects: Project[] = portfolio.proj
   return projects.filter((p) => p.tech.some((t) => terms.has(t.toLowerCase())));
 }
 
+const TAPVERA_SKILL_IDS = new Set([
+  "node",
+  "express",
+  "react",
+  "nextjs",
+  "mysql",
+  "postgresql",
+  "rest",
+  "git",
+  "jwt",
+  "javascript",
+  "html5",
+  "css3",
+  "mvc",
+]);
+
+/** True when the skill was actively used in production during the Tapvera internship. */
+export function isTapveraSkill(skill: Skill): boolean {
+  if (skill.production) return true;
+  return TAPVERA_SKILL_IDS.has(skill.id);
+}
+
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-/** True when the internship bullets mention the skill by name/alias (whole-word match). */
+/** True when the internship bullets or role context associate with the skill. */
 export function mentionedInInternship(skill: Skill): boolean {
+  if (isTapveraSkill(skill)) return true;
   const text = portfolio.experience.map((e) => e.bullets.join(" ")).join(" ");
   return skillTerms(skill).some((term) => new RegExp(`(?<![A-Za-z0-9])${escapeRegExp(term)}(?![A-Za-z0-9])`, "i").test(text));
 }

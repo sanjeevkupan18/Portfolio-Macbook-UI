@@ -29,7 +29,17 @@ function Overview() {
       <header className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight">{profile.name}</h1>
         <p className="text-[14px] text-accent">{profile.role}</p>
-        <p className="mt-1 text-[12.5px] text-muted">{profile.location} · <a className="underline" href={`mailto:${profile.email}`}>{profile.email}</a></p>
+        <p className="mt-1 text-[12.5px] text-muted">
+          {profile.location} ·{" "}
+          <a
+            className="underline"
+            href={`mailto:${profile.email}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {profile.email}
+          </a>
+        </p>
       </header>
 
       <CvSection title="Summary">
@@ -130,7 +140,14 @@ function PdfFallback() {
       <p className="max-w-sm text-[13px] text-muted">Your browser can&apos;t display PDFs inline. Open or download the resume instead, or switch to the Overview tab.</p>
       <div className="flex flex-wrap justify-center gap-2">
         <ButtonLink variant="primary" href={resume.file} target="_blank" rel="noopener noreferrer"><ExternalLink className="size-3.5" aria-hidden="true" /> Open Resume</ButtonLink>
-        <ButtonLink href={resume.file} download={resume.downloadName}><Download className="size-3.5" aria-hidden="true" /> Download</ButtonLink>
+        <ButtonLink
+          href={resume.file}
+          download={resume.downloadName}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Download className="size-3.5" aria-hidden="true" /> Download
+        </ButtonLink>
       </div>
     </div>
   );
@@ -202,7 +219,15 @@ export function ResumeApp() {
         <ButtonLink size="md" href={resume.file} target="_blank" rel="noopener noreferrer" className="min-h-9">
           <ExternalLink className="size-3.5" aria-hidden="true" /> Open Resume
         </ButtonLink>
-        <ButtonLink size="md" variant="primary" href={resume.file} download={resume.downloadName} className="min-h-9">
+        <ButtonLink
+          size="md"
+          variant="primary"
+          href={resume.file}
+          download={resume.downloadName}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="min-h-9"
+        >
           <Download className="size-3.5" aria-hidden="true" /> Download Resume
         </ButtonLink>
       </div>

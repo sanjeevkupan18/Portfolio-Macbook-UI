@@ -41,7 +41,7 @@ function ClockWidget({ now, clock24 }: { now: number; clock24: boolean }) {
   );
 }
 
-function BatteryWidget({ level, charging }: { level: number; charging: boolean }) {
+function BatteryWidget({ level, charging, isReal }: { level: number; charging: boolean; isReal?: boolean }) {
   const r = 26;
   const c = 2 * Math.PI * r;
   return (
@@ -59,7 +59,7 @@ function BatteryWidget({ level, charging }: { level: number; charging: boolean }
         </svg>
         <div className="flex flex-col gap-1 text-[12px] text-muted">
           <BatteryGlyph level={level} charging={charging} className="text-foreground" />
-          <span>{charging ? "Charging" : "On battery"}</span>
+          <span>{charging ? "Charging" : "On battery"}{isReal ? " · live" : ""}</span>
         </div>
       </div>
     </div>
@@ -97,7 +97,7 @@ export function MobileHome() {
           <section aria-label="Widgets" className="grid grid-cols-2 gap-3">
             {w.date && <DateWidget now={now} />}
             {w.clock && <ClockWidget now={now} clock24={prefs.clock24} />}
-            {w.battery && <BatteryWidget level={battery.level} charging={battery.charging} />}
+            {w.battery && <BatteryWidget level={battery.level} charging={battery.charging} isReal={battery.isReal} />}
             {w.projects && (
               <button type="button" onClick={() => openApp("projects")} aria-label={`Projects: ${projects.length} total. Open Projects`} className={cn(widgetBase, "active:scale-[0.98] transition-transform")}>
                 <span className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wide text-muted">

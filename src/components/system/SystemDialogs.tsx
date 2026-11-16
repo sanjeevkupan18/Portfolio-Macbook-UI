@@ -30,7 +30,7 @@ function AboutThisMac() {
       </dl>
       <div className="mt-5 flex flex-wrap justify-center gap-2">
         {socialLinks.map((l) => (
-          <a key={l.id} href={l.url} target={l.id === "email" ? undefined : "_blank"} rel="noopener noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-surface px-3 text-[12px] font-medium shadow-[0_0_0_0.5px_var(--border)] hover:bg-surface-2">
+          <a key={l.id} href={l.url} target="_blank" rel="noopener noreferrer" className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-surface px-3 text-[12px] font-medium shadow-[0_0_0_0.5px_var(--border)] hover:bg-surface-2">
             <SocialIcon id={l.id} className="size-4" />{l.label}
           </a>
         ))}
@@ -45,7 +45,7 @@ function Shortcuts() {
       <h2 className="mb-3 text-[16px] font-semibold">Keyboard Shortcuts</h2>
       <ul className="divide-y divide-border text-[13px]">
         {shortcuts.map((s) => (
-          <li key={s.label} className="flex items-start justify-between gap-4 py-2">
+          <li key={`${s.keys.join("+")}-${s.label}`} className="flex items-start justify-between gap-4 py-2">
             <span className="min-w-0">{s.label}{s.note && <span className="block text-[12px] text-muted">{s.note}</span>}</span>
             <span className="flex shrink-0 gap-1">{s.keys.map((k) => <kbd key={k} className="rounded-md bg-surface-2 px-1.5 py-0.5 font-sans text-[11px] shadow-[0_0_0_0.5px_var(--border)]">{k}</kbd>)}</span>
           </li>

@@ -26,14 +26,14 @@ export function SkillLogo({ skill, size = 28, className, labelled = false }: Ski
     const unreadable = resolved === "dark" ? lum < 0.06 : lum > 0.62;
     return (
       <svg
-        viewBox="0 0 24 24"
+        viewBox={icon.viewBox ?? "0 0 24 24"}
         width={size}
         height={size}
         className={className}
         fill={unreadable ? "currentColor" : icon.hex}
         {...a11y}
       >
-        <path d={icon.path} />
+        <path d={icon.path} fillRule="evenodd" clipRule="evenodd" />
       </svg>
     );
   }

@@ -3,4 +3,4 @@ export type IconName =
   | "Home" | "User" | "Layers" | "FolderOpen" | "Mail" | "FileText" | "Settings" | "ShieldCheck"
   | "Database" | "ChartBar" | "ChartLine" | "ChartScatter" | "Network" | "KeyRound" | "Code"
   | "Boxes" | "Workflow" | "Binary" | "Sparkles" | "Cpu" | "MessageSquareText" | "Mic" | "Cloud"
-  | "Brain" | "ListChecks" | "Folder" | "Terminal" | "GitBranch" | "Globe";
+  | "Brain" | "ListChecks" | "Folder" | "Terminal" | "GitBranch" | "Globe" | "Bot";
